@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Museum Plant Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-green-50 min-h-screen p-8">
+  <h1 class="text-3xl font-bold mb-6 text-green-800">🌿 Museum Plant Dashboard</h1>
+
+  <!-- Search bar -->
+  <div class="mb-6 max-w-md">
+    <input 
+      id="search"
+      type="text" 
+      placeholder="Search plants..." 
+      class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
+    />
+  </div>
+
+  <!-- Plant grid -->
+  <div id="plantsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Plant cards will be rendered here -->
+  </div>
+
+  <script>
+    const plants = [
+      {
+        id: 1,
+        name: "Monstera Deliciosa",
+        category: "Tropical",
+        origin: "Central America",
+        image: "https://images.unsplash.com/photo-1616628182502-75b07daa4610",
+      },
+      {
+        id: 2,
+        name: "Fiddle Leaf Fig",
+        category: "Evergreen",
+        origin: "West Africa",
+        image: "https://images.unsplash.com/photo-1616627500795-1ad6df0c5ec1",
+      },
+      {
+        id: 3,
+        name: "Orchid",
+        category: "Flowering",
+        origin: "Global",
+        image: "https://images.unsplash.com/photo-1597047084899-b76ebc1a59c2",
+      },
+      {
+        id: 4,
+        name: "Bonsai",
+        category: "Miniature Tree",
+        origin: "Japan/China",
+        image: "https://images.unsplash.com/photo-1616628179045-6bde6f405d7c",
+      },
+      {
+        id: 5,
+        name: "Cactus",
+        category: "Succulent",
+        origin: "Americas",
+        image: "https://images.unsplash.com/photo-1543353071-10c8ba85a904",
+      },
+    ];
+
+    const plantsGrid = document.getElementById("plantsGrid");
+    const searchInput = document.getElementById("search");
+
+    function renderPlants(query = "") {
+      plantsGrid.innerHTML = "";
+      const filtered = plants.filter(plant =>
+        plant.name.toLowerCase().includes(query.toLowerCase())
+      );
+
+      filtered.forEach(plant => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl shadow-lg overflow-hidden hover:scale-105 transition-transform";
+        card.innerHTML = `
+          <img src="${plant.image}" alt="${plant.name}" class="h-48 w-full object-cover" />
+          <div class="p-4">
+            <h2 class="text-xl font-semibold mb-2 text-green-700">${plant.name}</h2>
+            <p class="text-gray-600 mb-1">Category: ${plant.category}</p>
+            <p class="text-gray-600 mb-3">Origin: ${plant.origin}</p>
+            <button class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700">View Details</button>
+          </div>
+        `;
+        plantsGrid.appendChild(card);
+      });
+    }
+
+    renderPlants();
+
+    searchInput.addEventListener("input", (e) => {
+      renderPlants(e.target.value);
+    });
+  </script>
+</body>
+</html>
